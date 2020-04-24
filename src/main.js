@@ -21,22 +21,6 @@ clear.onclick = function () {
   context.clearRect(0, 0, canvas.width, canvas.height)
 }
 
-download.onclick = function () {
-  let compositeOperation = context.globalCompositeOperation
-  context.globalCompositeOperation = 'destination-over'
-  context.fillStyle = '#fff'
-  context.fillRect(0, 0, canvas.width, canvas.height)
-  let imageData = canvas.toDataURL('image/png')
-  context.putImageData(context.getImageData(0, 0, canvas.width, canvas.height), 0, 0)
-  context.globalCompositeOperation = compositeOperation
-  let a = document.createElement('a')
-  document.body.appendChild(a)
-  a.href = imageData
-  a.download = 'mypaint'
-  a.target = '_blank'
-  a.click()
-}
-
 black.onclick = function () {
   context.fillStyle = 'black'
   context.strokeStyle = 'black'

@@ -56,10 +56,6 @@ body {
     background-color: #f56c6c;
 }
 
-.button #download {
-    background-color: deepskyblue;
-}
-
 .button button svg {
     width: 1.2em;
     height: 1.2em;
@@ -122,8 +118,8 @@ svg.active {
 
 .sizes {
     position: fixed;
-    top: 45px;
-    right: 25px;
+    top: 300px;
+    left: 10px;
 }
 
 .sizes > li {
