@@ -121,11 +121,12 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 autoSetCanvasSize(canvas);
+listenToUser(canvas);
 var eraserEnabled = false;
 
 eraser.onclick = function () {
   eraserEnabled = true;
-  actions.className = 'actions x ';
+  actions.className = 'actions x';
 };
 
 brush.onclick = function () {
@@ -164,44 +165,85 @@ function listenToUser(canvas) {
     y: undefined
   };
 
-  canvas.onmousedown = function (point) {
-    var x = point.clientX;
-    var y = point.clientY;
-    using = true;
+  if (document.body.ontouchstart === undefined) {
+    canvas.onmousedown = function (point) {
+      var x = point.clientX;
+      var y = point.clientY;
+      using = true;
 
-    if (eraserEnabled) {
-      context.clearRect(x - 5, y - 5, 10, 10);
-    } else {
-      lastPoint = {
-        x: x,
-        y: y
-      };
-    }
-  };
+      if (eraserEnabled) {
+        context.clearRect(x - 5, y - 5, 10, 10);
+      } else {
+        lastPoint = {
+          x: x,
+          y: y
+        };
+      }
+    };
 
-  canvas.onmousemove = function (point) {
-    var x = point.clientX;
-    var y = point.clientY;
+    canvas.onmousemove = function (point) {
+      var x = point.clientX;
+      var y = point.clientY;
 
-    if (!using) {
-      return;
-    }
+      if (!using) {
+        return;
+      }
 
-    if (eraserEnabled) {
-      context.clearRect(x - 5, y - 5, 10, 10);
-    } else {
-      var newPoint = {
-        x: x,
-        y: y
-      };
-      drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint, y);
-      lastPoint = newPoint;
-    }
-  };
+      if (eraserEnabled) {
+        context.clearRect(x - 5, y - 5, 10, 10);
+      } else {
+        var newPoint = {
+          x: x,
+          y: y
+        };
+        drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
+        lastPoint = newPoint;
+      }
+    };
 
-  canvas.onmouseup = function () {
-    using = false;
-  };
+    canvas.onmouseup = function () {
+      using = false;
+    };
+  } else {
+    canvas.ontouchstart = function (point) {
+      var x = point.touches[0].clientX;
+      var y = point.touches[0].clientY;
+      using = true;
+
+      if (eraserEnabled) {
+        context.clearRect(x - 5, y - 5, 10, 10);
+      } else {
+        lastPoint = {
+          x: x,
+          y: y
+        };
+      }
+    };
+
+    canvas.ontouchmove = function (point) {
+      var x = point.touches[0].clientX;
+      var y = point.touches[0].clientY;
+
+      if (!using) {
+        return;
+      }
+
+      if (eraserEnabled) {
+        context.clearRect(x - 5, y - 5, 10, 10);
+      } else {
+        var newPoint = {
+          x: x,
+          y: y
+        };
+        drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
+        lastPoint = newPoint;
+      }
+    };
+
+    canvas.ontouchend = function () {
+      using = false;
+    };
+  }
 }
 },{}],"C:/Users/lispr/AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
