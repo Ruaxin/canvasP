@@ -126,12 +126,46 @@ var eraserEnabled = false;
 
 eraser.onclick = function () {
   eraserEnabled = true;
-  actions.className = 'actions x';
+  eraser.classList.add('active');
+  pen.classList.remove('active');
 };
 
-brush.onclick = function () {
+pen.onclick = function () {
   eraserEnabled = false;
-  actions.className = 'actions';
+  pen.classList.add('active');
+  eraser.classList.remove('active');
+};
+
+black.onclick = function () {
+  context.strokeStyle = 'black';
+  black.classList.add('active');
+  red.classList.remove('active');
+  green.classList.remove('active');
+  blue.classList.remove('active');
+};
+
+red.onclick = function () {
+  context.strokeStyle = 'red';
+  red.classList.add('active');
+  blue.classList.remove('active');
+  green.classList.remove('active');
+  black.classList.remove('active');
+};
+
+blue.onclick = function () {
+  context.strokeStyle = 'red';
+  blue.classList.add('active');
+  red.classList.remove('active');
+  green.classList.remove('active');
+  black.classList.remove('active');
+};
+
+green.onclick = function () {
+  context.strokeStyle = 'red';
+  green.classList.add('active');
+  blue.classList.remove('active');
+  red.classList.remove('active');
+  black.classList.remove('active');
 };
 
 function drawLine(x1, y1, x2, y2) {
@@ -273,7 +307,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34246" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53109" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
