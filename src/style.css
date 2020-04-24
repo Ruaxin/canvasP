@@ -1,10 +1,20 @@
-ul, ol {
+ul,
+ol {
     list-style: none
 }
 
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+#canvas {
+    display: block;
+    background: white;
+    position: fixed;
+    left: 0;
+    top: 0;
 }
 
 .icon {
@@ -15,36 +25,67 @@ ul, ol {
     overflow: hidden;
 }
 
-#canvas {
-    vertical-align: top;
-}
-
 body {
     overflow: hidden;
+    background-color: blanchedalmond;
 }
 
-.actions {
+.svg,
+.button {
     position: fixed;
     top: 0;
-    left: 0;
     padding: 10px;
 }
 
-.actions svg {
-    width: 1.5em;
-    height: 1.5em;
+.button {
+    left: 0;
+}
+
+.button button {
+    width: 40px;
+    height: 40px;
+    white-space: nowrap;
+    cursor: pointer;
+    border-radius: 50%;
+    outline: inherit;
+    border: none;
+    color: #fff;
+}
+
+.button #clear {
+    background-color: #f56c6c;
+}
+
+.button #download {
+    background-color: deepskyblue;
+}
+
+.button button svg {
+    width: 1.2em;
+    height: 1.2em;
     transition: all 0.3s;
     margin: 0 5px;
 }
 
-.actions svg.active {
-    fill: red;
+svg.active {
+    fill: deepskyblue;
     transform: scale(1.2);
+}
+
+.svg {
+    right: 0;
+}
+
+.svg svg {
+    width: 1.8em;
+    height: 1.8em;
+    transition: all 0.3s;
+    margin: 0 5px;
 }
 
 .colors {
     position: fixed;
-    top: 50px;
+    top: calc(50vh - 95px);
     left: 14px;
 }
 
@@ -73,7 +114,31 @@ body {
     background: blue;
 }
 
-.colors > li.active {
+.colors > li.active,
+.sizes > li.active {
     transform: scale(1.2);
     box-shadow: 0 0 3px rgba(0, 0, 0, 1);
+}
+
+.sizes {
+    position: fixed;
+    top: 45px;
+    right: 25px;
+}
+
+.sizes > li {
+    margin: 15px 0;
+    transition: all 0.3s;
+}
+
+.sizes > li.thin {
+    height: 0;
+    width: 30px;
+    border-top: 5px solid black;
+}
+
+.sizes > li.thick {
+    height: 0;
+    width: 30px;
+    border-top: 10px solid black;
 }

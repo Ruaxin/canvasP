@@ -120,6 +120,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"main.js":[function(require,module,exports) {
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
+var lineWidth = 5;
 autoSetCanvasSize(canvas);
 listenToUser(canvas);
 var eraserEnabled = false;
@@ -136,7 +137,28 @@ pen.onclick = function () {
   eraser.classList.remove('active');
 };
 
+clear.onclick = function () {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+download.onclick = function () {
+  var compositeOperation = context.globalCompositeOperation;
+  context.globalCompositeOperation = 'destination-over';
+  context.fillStyle = '#fff';
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  var imageData = canvas.toDataURL('image/png');
+  context.putImageData(context.getImageData(0, 0, canvas.width, canvas.height), 0, 0);
+  context.globalCompositeOperation = compositeOperation;
+  var a = document.createElement('a');
+  document.body.appendChild(a);
+  a.href = imageData;
+  a.download = 'mypaint';
+  a.target = '_blank';
+  a.click();
+};
+
 black.onclick = function () {
+  context.fillStyle = 'black';
   context.strokeStyle = 'black';
   black.classList.add('active');
   red.classList.remove('active');
@@ -145,36 +167,57 @@ black.onclick = function () {
 };
 
 red.onclick = function () {
+  context.fillStyle = 'red';
   context.strokeStyle = 'red';
   red.classList.add('active');
+  green.classList.remove('active');
   blue.classList.remove('active');
-  green.classList.remove('active');
-  black.classList.remove('active');
-};
-
-blue.onclick = function () {
-  context.strokeStyle = 'red';
-  blue.classList.add('active');
-  red.classList.remove('active');
-  green.classList.remove('active');
   black.classList.remove('active');
 };
 
 green.onclick = function () {
-  context.strokeStyle = 'red';
+  context.fillStyle = 'green';
+  context.strokeStyle = 'green';
   green.classList.add('active');
+  red.classList.remove('active');
   blue.classList.remove('active');
+  black.classList.remove('active');
+};
+
+blue.onclick = function () {
+  context.fillStyle = 'blue';
+  context.strokeStyle = 'blue';
+  blue.classList.add('active');
+  green.classList.remove('active');
   red.classList.remove('active');
   black.classList.remove('active');
+};
+
+thin.onclick = function () {
+  lineWidth = 5;
+  thin.classList.add('active');
+  thick.classList.remove('active');
+};
+
+thick.onclick = function () {
+  lineWidth = 10;
+  thick.classList.add('active');
+  thin.classList.remove('active');
 };
 
 function drawLine(x1, y1, x2, y2) {
   context.beginPath();
   context.moveTo(x1, y1);
-  context.lineWidth = 5;
+  context.lineWidth = lineWidth;
   context.lineTo(x2, y2);
   context.stroke();
   context.closePath();
+}
+
+function drawCricle(x, y, radius) {
+  context.beginPath();
+  context.arc(x, y, radius, 0, Math.PI * 2);
+  context.fill();
 }
 
 function autoSetCanvasSize(canvas) {
@@ -200,9 +243,9 @@ function listenToUser(canvas) {
   };
 
   if (document.body.ontouchstart === undefined) {
-    canvas.onmousedown = function (point) {
-      var x = point.clientX;
-      var y = point.clientY;
+    canvas.onmousedown = function (a) {
+      var x = a.clientX;
+      var y = a.clientY;
       using = true;
 
       if (eraserEnabled) {
@@ -215,9 +258,9 @@ function listenToUser(canvas) {
       }
     };
 
-    canvas.onmousemove = function (point) {
-      var x = point.clientX;
-      var y = point.clientY;
+    canvas.onmousemove = function (a) {
+      var x = a.clientX;
+      var y = a.clientY;
 
       if (!using) {
         return;
@@ -230,6 +273,7 @@ function listenToUser(canvas) {
           x: x,
           y: y
         };
+        drawCricle(x, y, lineWidth / 2);
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
         lastPoint = newPoint;
       }
@@ -239,9 +283,9 @@ function listenToUser(canvas) {
       using = false;
     };
   } else {
-    canvas.ontouchstart = function (point) {
-      var x = point.touches[0].clientX;
-      var y = point.touches[0].clientY;
+    canvas.ontouchstart = function (a) {
+      var x = a.touches[0].clientX;
+      var y = a.touches[0].clientY;
       using = true;
 
       if (eraserEnabled) {
@@ -254,9 +298,9 @@ function listenToUser(canvas) {
       }
     };
 
-    canvas.ontouchmove = function (point) {
-      var x = point.touches[0].clientX;
-      var y = point.touches[0].clientY;
+    canvas.ontouchmove = function (a) {
+      var x = a.touches[0].clientX;
+      var y = a.touches[0].clientY;
 
       if (!using) {
         return;
@@ -269,6 +313,7 @@ function listenToUser(canvas) {
           x: x,
           y: y
         };
+        drawCricle(x, y, lineWidth / 2);
         drawLine(lastPoint.x, lastPoint.y, newPoint.x, newPoint.y);
         lastPoint = newPoint;
       }

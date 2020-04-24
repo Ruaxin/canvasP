@@ -8,23 +8,38 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<canvas id="canvas">
-  <div id="actions" class="actions">
-    <svg id="pen" class="active icon" aria-hidden="true">
-      <use xlink:href="#icon-pen"></use>
+<canvas id="canvas"></canvas>
+<div class="button">
+  <button id="clear">
+    <svg class="icon" aria-hidden="true">
+      <use xlink:href="#icon-clear"></use>
     </svg>
-    <svg id="eraser" class="icon" aria-hidden="true">
-      <use xlink:href="#icon-eraser"></use>
+  </button>
+  <button id="download">
+    <svg class="icon" aria-hidden="true">
+      <use xlink:href="#icon-save"></use>
     </svg>
-  </div>
-  <ol class="colors">
-    <li id="black" class="active black"></li>
-    <li id="red" class="red"></li>
-    <li id="blue" class="blue"></li>
-    <li id="green" class="green"></li>
-  </ol>
-</canvas>
-<script src="main.js"></script>
-<script src="//at.alicdn.com/t/font_728543_2vqfl041ks4.js"></script>
+  </button>
+</div>
+<div class="svg">
+  <svg id="pen" class="active icon" aria-hidden="true">
+    <use xlink:href="#icon-pen"></use>
+  </svg>
+  <svg id="eraser" class="icon" aria-hidden="true">
+    <use xlink:href="#icon-eraser"></use>
+  </svg>
+</div>
+<ol class="colors">
+  <li id="black" class="active black"></li>
+  <li id="red" class="red"></li>
+  <li id="green" class="green"></li>
+  <li id="blue" class="blue"></li>
+</ol>
+<ol class="sizes">
+  <li id="thin" class="active thin"></li>
+  <li id="thick" class="thick"></li>
+</ol>
+<script src="./main.js"></script>
+<script src="//at.alicdn.com/t/font_728543_ilpokcstwk.js"></script>
 </body>
 </html>
